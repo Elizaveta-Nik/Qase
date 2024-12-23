@@ -1,5 +1,7 @@
 package pages;
 
+import com.codeborne.selenide.Condition;
+
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -15,24 +17,27 @@ public class ProjectsPage {
             CREATE_PROJECT_BUTTON = "Create project",
             PROJECT_NAME = "//a[text()='%s']";
 
-    public void openPage() {
+    public ProjectsPage openPage() {
         open("projects");
+        return this;
     }
 
-    public void waitTillOpened() {
+    public ProjectsPage waitTillOpened() {
         $(byText(CREATE_NEW_PROJECT)).shouldBe(visible);
+        return this;
     }
 
-    public void createProject(String projectName, String projectDescription) {
+    public ProjectsPage createProject(String projectName, String projectDescription) {
         openPage();
         $(byText(CREATE_NEW_PROJECT)).click();
 
         $(PROJECT_NAME_CREATE).setValue(projectName);
         $(DESCRIPTION_AREA).setValue(projectDescription);
         $(byText(CREATE_PROJECT_BUTTON)).click();
+        return this;
     }
 
-    public void removeProject(String projectName) {
+    public ProjectsPage removeProject(String projectName) {
         $(byText(projectName))
                 .ancestor("tr")
                 .find(ACTION_MENU)
@@ -40,9 +45,21 @@ public class ProjectsPage {
         $(REMOVE_BUTTON).click();
         $x(DELETE_BUTTON).click();
         $(byText(projectName)).shouldNotBe(visible);
+        return this;
     }
 
-    public void showProject(String projectName) {
+    public ProjectsPage showProject(String projectName) {
         $x(String.format(PROJECT_NAME, projectName)).click();
+        return this;
+    }
+
+    public ProjectsPage shouldHaveProject() {
+        $(byText("Heroky")).shouldBe(Condition.visible);
+        return this;
+    }
+
+    public ProjectsPage shouldNotHaveProject() {
+        $(byText("Heroky")).shouldNotBe(visible);
+        return this;
     }
 }

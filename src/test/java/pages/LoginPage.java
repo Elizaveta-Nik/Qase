@@ -2,7 +2,6 @@ package pages;
 
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.Selenide.$;
 
 public class LoginPage {
 
@@ -10,13 +9,15 @@ public class LoginPage {
             PASSWORD = "[name=password]",
             BUTTON_NAME = "Sign in";
 
-    public void openPage() {
+    public LoginPage openPage() {
         open("login");
+        return this;
     }
 
-    public void login(String user, String password) {
+    public LoginPage login(String user, String password) {
         $(USER).setValue(user);
         $(PASSWORD).setValue(password);
         $(byText(BUTTON_NAME)).click();
+        return this;
     }
 }

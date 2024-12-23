@@ -8,37 +8,21 @@ public class ProjectTest extends BaseTest {
     String password = "!Woofwoof1688";
 
     @Test
-    public void checkValidLogin() {
-        loginPage.openPage();
-        loginPage.login(user, password);
-        projectsPage.waitTillOpened();
-    }
+    public void checkCreateProjectAndTestKeys() {
+        loginPage.openPage()
+                .login(user, password);
+        projectsPage.waitTillOpened()
+                .createProject("Heroky", "wow")
+                .openPage()
+                .shouldHaveProject()
+                .showProject("Heroky");
 
-    @Test
-    public void checkCreateProject() {
-        loginPage.openPage();
-        loginPage.login(user, password);
-        projectsPage.waitTillOpened();
-        projectsPage.createProject("qwerty", "wow");
-    }
+        repositoryPage.createCase("oky", "wewe", "qwwww", "qqqq", 2,
+                        4, 2, 2, 2, 1)
+                .shouldHaveTestCase("oky");
 
-    @Test
-    public void checkCreateTestKeys() {
-        loginPage.openPage();
-        loginPage.login(user, password);
-        projectsPage.waitTillOpened();
-        projectsPage.showProject("qwerty");
-
-        repositoryPage.createCase("qwwe", "wewe", "qwwww", "qqqq", 2,
-                4, 2, 2, 2, 1);
-        repositoryPage.waitTillOpened();
-    }
-
-    @Test
-    public void checkDeleteProject() {
-        loginPage.openPage();
-        loginPage.login(user, password);
-        projectsPage.waitTillOpened();
-        projectsPage.removeProject("Heroky");
+        projectsPage.openPage()
+                .removeProject("Heroky")
+                .shouldNotHaveProject();
     }
 }
