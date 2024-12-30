@@ -12,7 +12,6 @@ import pages.RepositoryPage;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 
-
 public class BaseTest {
 
     LoginPage loginPage;

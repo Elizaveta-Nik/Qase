@@ -10,7 +10,7 @@ public class ProjectsPage {
 
     private static final String ACTION_MENU = "button[aria-label='Open action menu']",
             REMOVE_BUTTON = "[data-testid=remove]",
-            DELETE_BUTTON = "//button/span[text()='Delete project']",
+            DELETE_BUTTON = "//button[contains(.,'Delete project')]",
             CREATE_NEW_PROJECT = "Create new project",
             PROJECT_NAME_CREATE = "#project-name",
             DESCRIPTION_AREA = "#description-area",
@@ -28,9 +28,7 @@ public class ProjectsPage {
     }
 
     public ProjectsPage createProject(String projectName, String projectDescription) {
-        openPage();
         $(byText(CREATE_NEW_PROJECT)).click();
-
         $(PROJECT_NAME_CREATE).setValue(projectName);
         $(DESCRIPTION_AREA).setValue(projectDescription);
         $(byText(CREATE_PROJECT_BUTTON)).click();
@@ -53,13 +51,13 @@ public class ProjectsPage {
         return this;
     }
 
-    public ProjectsPage shouldHaveProject() {
-        $(byText("Heroky")).shouldBe(Condition.visible);
+    public ProjectsPage shouldHaveProject(String projectName) {
+        $(byText(projectName)).shouldBe(Condition.visible);
         return this;
     }
 
-    public ProjectsPage shouldNotHaveProject() {
-        $(byText("Heroky")).shouldNotBe(visible);
+    public ProjectsPage shouldNotHaveProject(String projectName) {
+        $(byText(projectName)).shouldNotBe(visible);
         return this;
     }
 }

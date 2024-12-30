@@ -14,7 +14,7 @@ public class ProjectTest extends BaseTest {
         projectsPage.waitTillOpened()
                 .createProject("Heroky", "wow")
                 .openPage()
-                .shouldHaveProject()
+                .shouldHaveProject("Heroky")
                 .showProject("Heroky");
 
         repositoryPage.createCase("oky", "wewe", "qwwww", "qqqq", 2,
@@ -23,6 +23,6 @@ public class ProjectTest extends BaseTest {
 
         projectsPage.openPage()
                 .removeProject("Heroky")
-                .shouldNotHaveProject();
+                .shouldNotHaveProject("Heroky");
     }
 }

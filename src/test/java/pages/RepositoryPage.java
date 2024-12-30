@@ -19,7 +19,15 @@ public class RepositoryPage {
             MUTED_CASE = "//*[@id='is_muted']/parent::span",
             PRECONDITIONS = "//label[contains(@for,'0-preconditions')]/parent::div//p",
             POSTCONDITIONS = "//label[contains(@for,'0-postconditions')]/parent::div//p",
-            BUTTON_SAVE = "//button/span[text()='Save']";
+            BUTTON_SAVE = "//button/span[text()='Save']",
+            STATUS = "//div[contains(@id,'0-status')]",
+            SEVERITY = "//div[contains(@id,'0-severity')]",
+            PRIORITY = "//div[contains(@id,'0-priority')]",
+            TYPE = "//div[contains(@id,'0-type')]",
+            LAYER = "// div[contains(@id,'0-layer')]",
+            ISFLAKY = "//div[contains(@id,'0-is_flaky')]",
+            BEHAVIOR = "//div[contains(@id,'0-behavior')]",
+            AUTOMATION = "//div[contains(@id,'0-isManual')]";
 
     private final TextInput descriptionInput;
     private final TextInput preconditionsInput;
@@ -32,18 +40,19 @@ public class RepositoryPage {
         this.preconditionsInput = new TextInput(PRECONDITIONS);
         this.postconditionsInput = new TextInput(POSTCONDITIONS);
 
-        dropdowns.put("status", new Dropdown("//div[contains(@id,'0-status')]", "0-status"));
-        dropdowns.put("severity", new Dropdown("//div[contains(@id,'0-severity')]", "0-severity"));
-        dropdowns.put("priority", new Dropdown("//div[contains(@id,'0-priority')]", "0-priority"));
-        dropdowns.put("type", new Dropdown("//div[contains(@id,'0-type')]", "0-type"));
-        dropdowns.put("layer", new Dropdown("// div[contains(@id,'0-layer')]", "0-layer"));
-        dropdowns.put("isFlaky", new Dropdown("//div[contains(@id,'0-is_flaky')]", "0-is_flaky"));
-        dropdowns.put("behavior", new Dropdown("//div[contains(@id,'0-behavior')]", "0-behavior"));
-        dropdowns.put("automation", new Dropdown("//div[contains(@id,'0-isManual')]", "0-isManual"));
+        dropdowns.put("status", new Dropdown(STATUS, "0-status"));
+        dropdowns.put("severity", new Dropdown(SEVERITY, "0-severity"));
+        dropdowns.put("priority", new Dropdown(PRIORITY, "0-priority"));
+        dropdowns.put("type", new Dropdown(TYPE, "0-type"));
+        dropdowns.put("layer", new Dropdown(LAYER, "0-layer"));
+        dropdowns.put("isFlaky", new Dropdown(ISFLAKY, "0-is_flaky"));
+        dropdowns.put("behavior", new Dropdown(BEHAVIOR, "0-behavior"));
+        dropdowns.put("automation", new Dropdown(AUTOMATION, "0-isManual"));
     }
 
-    public RepositoryPage createCase(String title, String description, String preconditions, String postconditions, int statusOption,
-                                     int severityOption, int priorityOption, int typeOption, int layerOption, int isFlakyOption) {
+    public RepositoryPage createCase(String title, String description, String preconditions, String postconditions,
+                                     int statusOption, int severityOption, int priorityOption, int typeOption,
+                                     int layerOption, int isFlakyOption) {
         $(CREATE_BUTTON).click();
 
         $(TITLE).setValue(title);
@@ -66,7 +75,7 @@ public class RepositoryPage {
     }
 
     public RepositoryPage shouldHaveTestCase(String testCaseName) {
-        $(byText("oky")).shouldBe(Condition.visible);
+        $(byText(testCaseName)).shouldBe(Condition.visible);
         return this;
     }
 
